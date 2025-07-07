@@ -230,6 +230,3 @@ Great for practicing real-world exploitation chains!
 * [HackTricks](https://book.hacktricks.xyz/)
 * [Medium Write-up](https://medium.com/@ypopova3/planning-hackthebox-fd3d5fcb8fc7)
 
----
-
-
