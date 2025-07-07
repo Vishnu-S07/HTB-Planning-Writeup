@@ -218,7 +218,7 @@ cat /root/root.txt
 ```
 
 ![User Flag](screenshots/user-flag.png)
-![Root Flag](screenshots/root-flagl.png)
+![Root Flag](screenshots/root-flag.png)
 
 ---
 
