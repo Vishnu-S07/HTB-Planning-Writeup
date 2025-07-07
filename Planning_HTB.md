@@ -18,7 +18,7 @@ The Planning machine involves:
 - Docker container escape  
 - Privilege escalation via SSH port forwarding and command injection  
 
-![Planning Banner](screenshots/planning-banner.png)
+![Planning Banner](screenshots/Planning-banner.png)
 
 ---
 
