@@ -1,35 +1,47 @@
 <h1 align="center">🧠 Hack The Box – Planning (Easy)</h1>
 
 <p align="center">
-  <img src="screenshots/planning.png" width="400" alt="Planning Machine Screenshot"/>
+  <a href="https://app.hackthebox.com/machines/Planning" target="_blank">
+    <img src="screenshots/Planning-banner.png" alt="Planning Machine Banner" width="800"/>
+  </a>
 </p>
 
 <p align="center">
-  <b>A full walkthrough of the Hack The Box 'Planning' machine</b><br/>
-  <i>By Vishnu S | Completed on July 6, 2025</i>
+  <b><a href="https://app.hackthebox.com/machines/Planning">🔗 View Planning Machine on Hack The Box</a></b><br/>
+  <i>By Vishnu S • Completed on July 6, 2025</i>
 </p>
 
 ---
 
-## 📄 Write-up
+## 📄 Full Write-up
 
-🔗 [Click here to view the full write-up](./Planning_HTB.md)
-
----
-
-## 🔍 What’s Inside
-
-- ✅ Nmap enumeration
-- ✅ Virtual host & subdomain discovery
-- ✅ Grafana RCE exploitation (CVE-2024-9264)
-- ✅ Docker escape using leaked credentials
-- ✅ SSH port forwarding
-- ✅ Reverse shell injection to gain root
-- ✅ Screenshot-rich step-by-step explanation
+👉 [Click here to view the full walkthrough](./Planning.md)
 
 ---
 
-## 📸 Preview Screenshots
+## 🛠 Tools Used
+
+- `nmap` – Port scanning  
+- `ffuf` – Subdomain enumeration  
+- `python3` – Exploit execution  
+- `netcat` – Reverse shell listener  
+- `ssh` – Remote login & port forwarding  
+- `linPEAS` – Privilege escalation enumeration
+
+---
+
+## ✅ Techniques Used
+
+- 🔍 Virtual host & subdomain enumeration  
+- 🛠 Grafana Remote Code Execution (CVE-2024-9264)  
+- 🐳 Docker container escape  
+- 🔐 SSH credential reuse  
+- 🚪 Port forwarding  
+- 🧠 Reverse shell injection via internal panel
+
+---
+
+## 📸 Screenshot Previews
 
 <p align="center">
   <img src="screenshots/nmap-scan.png" width="250"/>
@@ -39,9 +51,22 @@
 
 ---
 
-## 🔗 References
+## 🏁 Result
 
-- [Grafana RCE – CVE-2024-9264](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-9264)
-- [Exploit Script](https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit)
-- [HackTricks](https://book.hacktricks.xyz/)
+Captured both flags:
+
+```bash
+cat /home/enzo/user.txt
+cat /root/root.txt
+````
+
+---
+
+## 📚 References
+
+* [HTB – Planning Machine](https://app.hackthebox.com/machines/Planning)
+* [Grafana CVE-2024-9264](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-9264)
+* [Exploit by z3k0sec](https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit)
+* [HackTricks](https://book.hacktricks.xyz/)
+
 
