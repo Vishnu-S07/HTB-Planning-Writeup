@@ -15,7 +15,7 @@
 
 ## 📄 Full Write-up
 
-👉 [Click here to view the full walkthrough](./Planning.md)
+👉 [Click here to view the full walkthrough](./Planning_HTB.md)
 
 ---
 
