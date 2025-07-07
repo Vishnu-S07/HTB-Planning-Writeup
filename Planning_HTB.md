@@ -18,7 +18,7 @@ The Planning machine involves:
 - Docker container escape  
 - Privilege escalation via SSH port forwarding and command injection  
 
-![Planning Page](screenshots/planning.png)
+![Planning Banner](screenshots/planning-banner.png)
 
 ---
 
@@ -41,7 +41,6 @@ nmap 10.10.11.68
 ````
 
 ![Nmap Output](screenshots/nmap-scan.png)
-
 ---
 
 ### 2️⃣ Virtual Host Setup
@@ -53,7 +52,7 @@ Modified `/etc/hosts`:
 ```
 
 ![Host Added](screenshots/added-host.png)
-
+![Planning Page](screenshots/planning.png)
 ---
 
 ### 3️⃣ Subdomain Discovery
