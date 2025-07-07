@@ -13,7 +13,7 @@
 
 ## 📄 Write-up
 
-🔗 [Click here to view the full write-up](./Planning.md)
+🔗 [Click here to view the full write-up](./Planning_HTB.md)
 
 ---
 
@@ -44,4 +44,4 @@
 - [Grafana RCE – CVE-2024-9264](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-9264)
 - [Exploit Script](https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit)
 - [HackTricks](https://book.hacktricks.xyz/)
-```
+
