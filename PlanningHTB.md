@@ -206,7 +206,7 @@ cat /root/root.txt
 ```
 
 ![User Flag](user-flag.png)
-![Root Flag](root-flagl.png)
+![Root Flag](root-flag.png)
 
 ---
 
@@ -233,5 +233,3 @@ Great for practicing real-world exploitation chains!
 ---
 
 
-- Styling for portfolio format
-```
